@@ -27,7 +27,7 @@ module.exports = {
         'quote-props': ['error', 'as-needed'],
         'object-curly-spacing': ['error', 'always'],
         indent: ['error', 4, { SwitchCase: 2 }],
-        'max-len': ['warn', { code: 120, tabWidth: 4 }],
+        'max-len': ['warn', { code: 120, tabWidth: 4, ignoreComments: true }],
         'function-paren-newline': ['error', 'multiline'],
         'function-call-argument-newline': ['error', 'consistent'],
         'object-curly-newline': ['error', { multiline: true }],
