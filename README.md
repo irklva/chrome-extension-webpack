@@ -33,7 +33,7 @@ Webpack, TypeScript, code analysis and CSS preprocessor make extension developme
 
 #### `npm build:prod`
 
-### 4. Add the extension to Chrome:
+### Add the extension to Chrome:
 #### 1. Go to `chrome://extensions/`
 #### 2. Enable the `Developer mode`
 #### 3. Click on `Load unpacked`
