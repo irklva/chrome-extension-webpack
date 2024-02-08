@@ -4,7 +4,7 @@ import type { Configuration } from 'webpack';
 export function buildResolvers({ paths }: BuildOptions): Configuration['resolve'] {
     return {
         extensions: ['.ts', '.js'],
-        preferAbsolute: true,
+        preferAbsolute: false,
         modules: [paths.src, 'node_modules'],
         mainFiles: ['index'],
         //Enable alias if necessary

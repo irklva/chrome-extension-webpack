@@ -1,5 +1,5 @@
 import { BlockPosition, logo } from '../constants/constants';
-import { addElement } from '../helpers/page-elements/addElement';
+import { addElement } from '../helpers/page-elements/add-elements/addElement';
 import { findStockName } from './findStockName';
 import type { StockForRefList, StockForBlock , StockForProductCard } from 'content/types/types';
 

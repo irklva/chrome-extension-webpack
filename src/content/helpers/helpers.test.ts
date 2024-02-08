@@ -2,7 +2,7 @@ import { getPartFromText } from './helpers';
 
 describe('getProductId', () => {
 
-    it('correct part', () => {
+    test('correct part', () => {
         expect(getPartFromText(
             '/catalog/123/detail.aspx',
             '/catalog/',
@@ -11,7 +11,7 @@ describe('getProductId', () => {
         )).toBe('123');
     });
 
-    it('incorrect part', () => {
+    test('incorrect part', () => {
         expect(() => {
             getPartFromText(
                 '/detail.aspx/qwe/catalog',

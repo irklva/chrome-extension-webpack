@@ -4,7 +4,7 @@ import { getProductCard } from './product-card/getProductCard';
 import { addSppBlock } from './spp-block/addSppBlock';
 import { addStocksBlock } from './stocks-block/addStocksBlock';
 import { getStocks } from './stocks-block/getStocks';
-import { getStocksNames } from './stocks-block/getStocksNames';
+import { getStocksList } from './stocks-block/getStocksList';
 import './content.scss';
 
 (async () => {
@@ -13,7 +13,12 @@ import './content.scss';
     let stopAlert = false;
     const alertText = 'Блоки Market-helper могут отображаться некорректно. Попробуйте перезагрузить страницу.';
 
-    const stocksList = await getStocksNames();
+    const stocksList = await getStocksList();
+
+    const catchError = (err: string) => {
+        console.error(err);
+        newAlert = true;
+    };
 
     const urlPattern = /\/catalog\/\d+\/detail/;
     let lastUrl = '';
@@ -23,29 +28,16 @@ import './content.scss';
         if (urlPattern.test(currentUrl) && currentUrl !== lastUrl) {
             lastUrl = currentUrl;
             if (deleting) {
-                await Promise.all([
-                    removeElement('.market-helper.spp-block'),
-                    removeElement('.market-helper.base-section.stocks-block'),
-                ]).catch(err => {
-                    console.error(err);
-                    newAlert = true;
-                });
+                await removeElement('.market-helper.spp-block').catch(err => catchError(err));
+                await removeElement('.market-helper.base-section.stocks-block').catch(err => catchError(err));
                 deleting = false;
             }
-            try {
-                const productCard = await getProductCard();
-                const stocks = getStocks(productCard, stocksList);
-                const sppBlockPromise = addSppBlock(productCard);
-                if (stocks?.length) {
-                    const stocksBlockPromise = addStocksBlock(productCard, stocks, stocksList);
-                    await Promise.all([sppBlockPromise, stocksBlockPromise]);
-                } else {
-                    await sppBlockPromise;
-                }
-            } catch (err) {
-                console.error(err);
-                newAlert = true;
+            const productCard = await getProductCard().catch(err => catchError(err));
+            const stocks = getStocks(productCard, stocksList);
+            if (stocks?.length) {
+                await addStocksBlock(productCard, stocks, stocksList).catch(err => catchError(err));
             }
+            await addSppBlock(productCard).catch(err => catchError(err));
             deleting = true;
             stopAlert = alertError(alertText, newAlert, stopAlert);
             newAlert = false;

@@ -1,5 +1,5 @@
-import { BlockPosition } from '../../constants/constants';
-import { selectElement } from './select-element/selectElement';
+import { BlockPosition } from '../../../constants/constants';
+import { selectElement } from '../select-element/selectElement';
 
 export const addElement = async (
     key: string,

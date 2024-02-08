@@ -1,12 +1,21 @@
 import { BlockPosition, logo } from '../constants/constants';
-import { addElement } from '../helpers/page-elements/addElement';
+import { addElement } from '../helpers/page-elements/add-elements/addElement';
 import type { ProductCard } from 'content/types/types';
 
 export const addSppBlock = async (productCard: ProductCard): Promise<void> => {
     const priceData = productCard?.extended;
     const spp = priceData?.clientSale;
+    if (!spp) {
+        console.error('Incorrect client sale');
+    }
     const beforeSpp = ((priceData?.basicPriceU ?? NaN ) / 100);
-    const beforeSppString = isNaN(beforeSpp) ? '?' : beforeSpp?.toLocaleString('ru-RU');
+    let beforeSppString;
+    if (isNaN(beforeSpp)) {
+        beforeSppString = '?';
+        console.error('Incorrect basic price');
+    } else {
+        beforeSppString = beforeSpp?.toLocaleString('ru-RU');
+    }
     const sppBlock = `
             <img class="logo" alt="Market-helper logo" src=${logo}>
             <div class="wrap">

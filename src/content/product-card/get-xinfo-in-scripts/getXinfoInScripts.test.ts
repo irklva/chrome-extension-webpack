@@ -1,4 +1,5 @@
-import { getXinfoInScripts } from './productsInfo';
+import { getXinfoInScripts } from './getXinfoInScripts';
+
 
 const fetchPath = 'https://www.wildberries.ru/webapi/user/get-xinfo-v2';
 const fetchObject = {
@@ -12,15 +13,14 @@ const scriptsObject = {
     ],
     writable: true,
 };
+Object.defineProperty(document, 'scripts', scriptsObject);
 
 describe('getXinfoInScripts', () => {
     beforeEach(() => {
         jest.resetAllMocks();
     });
 
-    it('xinfo from server', async () => {
-        Object.defineProperty(document, 'scripts', scriptsObject);
-
+    test('xinfo from server', async () => {
         const mockResponse = { xinfo: 'mock-xinfo' };
         global.fetch = jest.fn().mockResolvedValue({ json: jest.fn().mockResolvedValue(mockResponse) });
 
@@ -32,9 +32,7 @@ describe('getXinfoInScripts', () => {
         );
     });
 
-    it('empty string if no xinfo in fetch-data', async () => {
-        Object.defineProperty(document, 'scripts', scriptsObject);
-
+    test('empty string if no xinfo in fetch-data', async () => {
         global.fetch = jest.fn().mockResolvedValue({ json: jest.fn().mockResolvedValue({}) });
 
         const result = await getXinfoInScripts();
@@ -45,9 +43,7 @@ describe('getXinfoInScripts', () => {
         expect(result).toBe('');
     });
 
-    it('null if fetch fails', async () => {
-        Object.defineProperty(document, 'scripts', scriptsObject);
-
+    test('null if fetch fails', async () => {
         global.fetch = jest.fn().mockRejectedValue(new Error('Fetch error'));
 
         const result = await getXinfoInScripts();
