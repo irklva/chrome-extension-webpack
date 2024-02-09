@@ -1,6 +1,7 @@
-import type { StockForRefList } from 'content/types/types';
+import { incStocksList } from '../constants/errors';
+import type { StockForRefList } from '../types/types';
 
-export const getStocksList = async () => {
+export const getStocksList = async (): Promise<StockForRefList[] | null> => {
     const stocksListUrl = 'https://static-basket-01.wb.ru/vol0/data/stores-data.json';
 
     return fetch(stocksListUrl)
@@ -15,8 +16,8 @@ export const getStocksList = async () => {
         })
         .catch(err => {
             console.error(err);
-            console.error('Incorrect stocks list');
+            console.error(incStocksList);
 
-            return [];
+            return null;
         });
 };

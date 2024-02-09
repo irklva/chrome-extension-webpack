@@ -1,3 +1,4 @@
+import { unblRemoveOldKey } from '../../constants/errors';
 import { selectElement } from './select-element/selectElement';
 
 export const removeElement = async (key: string) => {
@@ -8,6 +9,6 @@ export const removeElement = async (key: string) => {
         }
     } catch (e) {
         console.error(e);
-        throw new Error(`Unable to remove old "${key}"`);
+        throw new Error(`${unblRemoveOldKey} "${key}"`);
     }
 };

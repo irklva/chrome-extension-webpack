@@ -1,3 +1,4 @@
+import { unblGetProdId } from '../constants/errors';
 import { getPartFromText } from './helpers';
 
 describe('getProductId', () => {
@@ -17,8 +18,8 @@ describe('getProductId', () => {
                 '/detail.aspx/qwe/catalog',
                 '/catalog/',
                 '/detail.aspx',
-                'Unable to get product id',
+                unblGetProdId,
             );
-        }).toThrowError('Unable to get product id');
+        }).toThrowError(unblGetProdId);
     });
 });

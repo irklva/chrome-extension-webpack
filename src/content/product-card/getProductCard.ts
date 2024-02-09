@@ -1,5 +1,6 @@
-import { getPartFromText } from 'content/helpers/helpers';
-import { getXinfo } from 'content/product-card/get-xinfo/getXinfo';
+import { unblGetProdCard } from '../constants/errors';
+import { getPartFromText } from '../helpers/helpers';
+import { getXinfo } from './xinfo/getXinfo';
 
 export const getProductId = (): string => {
     return getPartFromText(
@@ -9,7 +10,8 @@ export const getProductId = (): string => {
         'Unable to get product id',
     );
 };
-export const getProducts = async (
+
+const getProducts = async (
     id: string,
     xinfo: string,
 ) => {
@@ -19,6 +21,7 @@ export const getProducts = async (
         .then(r => r.json())
         .then(d => d?.data?.products || null);
 };
+
 export const getProductCard = async () => {
     try {
         const id = getProductId();
@@ -27,10 +30,10 @@ export const getProductCard = async () => {
         if (products?.length) {
             return products[0];
         } else {
-            throw new Error('No products in response');
+            throw new Error();
         }
     } catch (err) {
         console.error(err);
-        throw new Error('Unable to get product card');
+        throw new Error(unblGetProdCard);
     }
 };

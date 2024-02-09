@@ -1,4 +1,5 @@
 import { BlockPosition } from '../../../constants/constants';
+import { unblAddKey } from '../../../constants/errors';
 import { selectElement } from '../select-element/selectElement';
 
 export const addElement = async (
@@ -30,6 +31,6 @@ export const addElement = async (
         }
     } catch (err) {
         console.error(err);
-        throw new Error(`Unable to add "${key}"`);
+        throw new Error(`${unblAddKey} "${key}"`);
     }
 };

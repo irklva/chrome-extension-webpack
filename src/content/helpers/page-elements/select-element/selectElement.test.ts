@@ -1,3 +1,4 @@
+import { unblFindEl } from '../../../constants/errors';
 import { selectElement } from './selectElement';
 
 const mockElements = [
@@ -35,7 +36,7 @@ describe('selectElement function', () => {
     test('no selected elements within the specified time', async () => {
         const result = selectElement(key, 3000);
         await expect(result).rejects
-            .toThrow('Timeout: Unable to find the element ".test-element" within the specified time');
+            .toThrow(`${unblFindEl} ".test-element"`);
         expect(mutationObserverMock).toHaveBeenCalled();
         const [observerInstance] = mutationObserverMock.mock.instances;
         expect(observerInstance.observe).toHaveBeenCalledTimes(1);

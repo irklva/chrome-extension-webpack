@@ -40,7 +40,7 @@ describe('getXinfoInScripts', () => {
             fetchPath,
             fetchObject,
         );
-        expect(result).toBe('');
+        expect(result).toBe(null);
     });
 
     test('null if fetch fails', async () => {

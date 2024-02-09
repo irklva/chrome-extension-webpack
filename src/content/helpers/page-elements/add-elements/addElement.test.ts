@@ -1,4 +1,5 @@
 import { BlockPosition } from '../../../constants/constants';
+import { unblAddKey, unblFindEl } from '../../../constants/errors';
 import { selectElement } from '../select-element/selectElement';
 import { addElement } from './addElement';
 
@@ -19,7 +20,7 @@ describe('addElement', () => {
         jest.restoreAllMocks();
     });
 
-    it('new element after selected elements', async () => {
+    test('new element after selected elements', async () => {
         const position = BlockPosition.AFTER;
         const addedElements: Element[] = [];
 
@@ -38,7 +39,7 @@ describe('addElement', () => {
         });
     });
 
-    it('new element as child of selected elements', async () => {
+    test('new element as child of selected elements', async () => {
         const position = BlockPosition.CHILD;
         const addedElements: Element[] = [];
 
@@ -61,12 +62,12 @@ describe('addElement', () => {
         });
     });
 
-    it('error if no selected element', async () => {
+    test('error if no selected element', async () => {
         const position = BlockPosition.AFTER;
 
-        mockSelectElement.mockRejectedValueOnce(new Error('Timeout: Unable to find the element'));
+        mockSelectElement.mockRejectedValue(new Error(unblFindEl));
 
         await expect(addElement(key, divClass, innerBlocks, position))
-            .rejects.toThrowError(`Unable to add "${key}"`);
+            .rejects.toThrowError(`${unblAddKey} "${key}"`);
     });
 });

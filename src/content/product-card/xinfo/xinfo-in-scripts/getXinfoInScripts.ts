@@ -1,3 +1,5 @@
+import { noSpaVersion } from '../../../constants/errors';
+
 export const getXinfoInScripts = async (): Promise<string | null> => {
     const spaVersionScript = Array.prototype.find.call(document.scripts, script => {
         const templates = script.src?.match(/\/js-templates.+/g);
@@ -16,13 +18,15 @@ export const getXinfoInScripts = async (): Promise<string | null> => {
             },
         })
             .then(r => r.json())
-            .then(d => d?.xinfo || '')
+            .then(d => d?.xinfo || null)
             .catch(err => {
                 console.error(err);
 
                 return null;
             });
     } else {
+        console.error(noSpaVersion);
+
         return null;
     }
 };

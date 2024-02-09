@@ -1,8 +1,8 @@
-import type { StockForRefList } from 'content/types/types';
+import type { StockForRefList } from '../types/types';
 
 export const findStockName = (
     wh: number,
-    stocksNames: StockForRefList[],
+    stocksNames: StockForRefList[] | null,
 ) => {
-    return stocksNames?.find(item => item.id === wh)?.name;
+    return stocksNames?.find(item => item.id === wh)?.name ?? '?';
 };

@@ -2,9 +2,9 @@ import { alertError } from './helpers/helpers';
 import { removeElement } from './helpers/page-elements/removeElement';
 import { getProductCard } from './product-card/getProductCard';
 import { addSppBlock } from './spp-block/addSppBlock';
-import { addStocksBlock } from './stocks-block/addStocksBlock';
-import { getStocks } from './stocks-block/getStocks';
+import { addStocksBlock } from './stocks-block/add-block/addStocksBlock';
 import { getStocksList } from './stocks-block/getStocksList';
+import { getStocks } from './stocks-block/stocks/getStocks';
 import './content.scss';
 
 (async () => {

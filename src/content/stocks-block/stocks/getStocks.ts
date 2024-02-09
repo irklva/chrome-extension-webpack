@@ -1,10 +1,11 @@
-import { findStockName } from './findStockName';
-import type { ProductCard, StockForRefList, StocksListForBlock } from 'content/types/types';
+import { failedGetDataForUnknown, failedGetDataForWh } from '../../constants/errors';
+import { findStockName } from '../findStockName';
+import type { ProductCard, StockForBlock, StockForRefList, StocksListForBlock } from '../../types/types';
 
 export const getStocks = (
-    productCard: ProductCard,
-    stocksList: StockForRefList[],
-) => {
+    productCard: ProductCard | undefined,
+    stocksList: StockForRefList[] | null,
+): StockForBlock[] => {
     const stocks: StocksListForBlock = {};
     productCard?.sizes?.forEach(size => {
         size.stocks?.forEach(stock => {
@@ -20,10 +21,10 @@ export const getStocks = (
                         stocks[stock.wh].qty += stock.qty;
                     }
                 }
-            } else if (stock.qty) {
-                console.error(`Failed to get ${stock.qty} stock data`);
+            } else if (stock.wh) {
+                console.error(`${failedGetDataForWh} ${stock.wh}`);
             } else {
-                console.error('Failed to get data for unknown stock');
+                console.error(failedGetDataForUnknown);
             }
         });
     });

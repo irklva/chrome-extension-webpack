@@ -1,13 +1,13 @@
-import { getXinfoInScripts } from '../get-xinfo-in-scripts/getXinfoInScripts';
+import { unblGetXinfo } from '../../constants/errors';
 import { getXinfo } from './getXinfo';
+import { getXinfoInScripts } from './xinfo-in-scripts/getXinfoInScripts';
 
-jest.mock('../get-xinfo-in-scripts/getXinfoInScripts');
+jest.mock('./xinfo-in-scripts/getXinfoInScripts');
 const mockXinfoInScripts = getXinfoInScripts as jest.MockedFunction<typeof getXinfoInScripts>;
 
 const mockXinfo = 'mock-xinfo';
 
 describe('getXinfo', () => {
-
     beforeEach(() => {
         jest.resetAllMocks();
         jest.restoreAllMocks();
@@ -38,15 +38,18 @@ describe('getXinfo', () => {
     });
 
     test('xinfo from getXinfoInScripts if no localStorage data', async () => {
-        mockXinfoInScripts.mockResolvedValueOnce(mockXinfo);
+        mockXinfoInScripts.mockResolvedValueOnce('');
 
         const result = await getXinfo();
-        expect(result).toBe(mockXinfo);
+        expect(result).toBe('');
     });
 
-    test('error if no xinfo in getXinfoInScripts and ', async () => {
+    test('error if no xinfo in getXinfoInScripts and localStorage', async () => {
+        jest.spyOn(console, 'error').mockImplementation(() => {});
         mockXinfoInScripts.mockResolvedValueOnce(null);
 
-        await expect(getXinfo()).rejects.toThrowError('Unable to get xinfo');
+        const result = await getXinfo();
+        expect(result).toBe('');
+        expect(console.error).toHaveBeenCalledWith(unblGetXinfo);
     });
 });

@@ -1,4 +1,5 @@
-import { getXinfoInScripts } from '../get-xinfo-in-scripts/getXinfoInScripts';
+import { noXinfoInlocalStorage, unblGetXinfo } from '../../constants/errors';
+import { getXinfoInScripts } from './xinfo-in-scripts/getXinfoInScripts';
 
 export const getXinfo = async (): Promise<string> => {
     const dataEntry = Object.entries(localStorage)
@@ -10,7 +11,7 @@ export const getXinfo = async (): Promise<string> => {
             const parsedData = JSON.parse(data);
             xinfo = parsedData?.data?.xinfo;
             if (!xinfo) {
-                throw new Error('No xinfo in localStorage JSON');
+                throw new Error(noXinfoInlocalStorage);
             }
         } catch (err) {
             console.error(err);
@@ -22,6 +23,8 @@ export const getXinfo = async (): Promise<string> => {
     if (xinfo) {
         return xinfo;
     } else {
-        throw new Error('Unable to get xinfo');
+        console.error(unblGetXinfo);
+
+        return '';
     }
 };
